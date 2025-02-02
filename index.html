@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rice Price Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Rice Price Analysis</h1>
+
+        <div class="upload-section">
+            <label for="csvFile" class="file-label">
+                <input type="file" id="csvFile" accept=".csv,.xlsx" hidden>
+                <span class="upload-btn">📂 Choose a File</span>
+            </label>
+            <p id="fileName" class="file-name">No file selected</p>
+        </div>
+
+        <button id="analyzeButton" disabled class="action-btn">Analyze Data</button>
+
+        <div class="status" id="status">Ready to process file...</div>
+
+        <div id="downloadSection" class="hidden">
+            <button id="downloadButton" class="download-btn">⬇️ Download Processed Data</button>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
