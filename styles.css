@@ -3,134 +3,288 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #1E90FF, #00C853);
-  color: white;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-  padding: 20px;
+  flex-direction: column;
+  background: #f5f5f5;
+  color: #333333;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Container */
 .container {
-  background: rgba(0, 0, 0, 0.85);
-  padding: 20px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.8s ease-in-out;
+  flex: 1;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Title */
+/* Add a pseudo-element for the glass effect */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: -1;
+}
+
 h1 {
-  font-size: 24px;
-  margin-bottom: 15px;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
 }
 
 /* Upload Section */
 .upload-section {
-  margin: 15px 0;
+  margin: 2rem 0;
+  text-align: center;
 }
 
 .file-label {
-  display: block;
-  background: #ff9800;
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #0066cc;
   color: white;
-  padding: 12px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  font-weight: 600;
 }
 
 .file-label:hover {
-  background: #e68900;
+  background: #0052a3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .file-name {
-  font-size: 14px;
-  margin-top: 5px;
-  color: #bbb;
-  word-break: break-all;  /* Ensure long names wrap properly */
-  max-width: 100%;
+  margin-top: 1rem;
+  color: #7f8c8d;
+  font-size: 0.9rem;
 }
 
 /* Buttons */
 .action-btn, .download-btn {
-  display: block;
   width: 100%;
-  background: #00C853;
-  color: white;
+  padding: 1rem;
   border: none;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 1rem 0;
+}
+
+.action-btn {
+  background: #28a745;
+  color: white;
+}
+
+.action-btn:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
 }
 
 .action-btn:disabled {
-  background: #555;
+  background: #bdc3c7;
   cursor: not-allowed;
 }
 
 .download-btn {
-  background: #1E90FF;
-  margin-top: 10px;
-}
-
-.action-btn:hover:not(:disabled) {
-  background: #009E4F;
+  background: #dc3545;
+  color: white;
 }
 
 .download-btn:hover {
-  background: #0072E3;
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
 }
 
 /* Status Section */
 .status {
-  margin: 15px 0;
-  padding: 10px;
-  background: #333;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 1rem 0;
+  text-align: center;
+  color: #2c3e50;
+  border: 1px solid #e9ecef;
 }
 
-/* Hidden Elements */
+/* Footer */
+.footer {
+  background: #ffffff;
+  padding: 1rem 0;
+  margin-top: auto;
+  border-top: 1px solid #e9ecef;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  font-size: 0.9rem;
+}
+
+.footer p {
+  color: #666666;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #0052a3;
+}
+
+/* Utilities */
 .hidden {
   display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 /* Animations */
 @keyframes fadeIn {
   from {
-      opacity: 0;
-      transform: translateY(-10px);
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-  .container {
-      width: 90%;
-      padding: 15px;
-  }
+/* Theme Switch */
+:root {
+    --bg-color: #f5f5f5;
+    --container-bg: #ffffff;
+    --text-color: #333333;
+    --border-color: #e9ecef;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
 
-  h1 {
-      font-size: 20px;
-  }
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #ffffff;
+    --border-color: #404040;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
 
-  .action-btn, .download-btn {
-      font-size: 14px;
-  }
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    background: var(--container-bg);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* Theme Toggle Button */
+.theme-switch {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--border-color);
+}
+
+.theme-icon {
+    font-size: 1.2rem;
+}
+
+/* Dark mode specific styles */
+[data-theme="dark"] .status {
+    background: #363636;
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .footer {
+    background: var(--container-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .footer p {
+    color: #999999;
+}
+
+[data-theme="dark"] .footer-links a {
+    color: #66b3ff;
+}
+
+[data-theme="dark"] .footer-links a:hover {
+    color: #99ccff;
 }

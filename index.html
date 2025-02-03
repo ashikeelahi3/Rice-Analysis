@@ -3,31 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VegieHat Data Analysis Tool">
+    <meta name="keywords" content="data analysis, CSV, Excel, visualization, VegieHat">
+    <meta name="author" content="Ashik E Elahi">
     <title>VegieHat Data Analysis</title>
-    <link rel="icon" type="image/png" href="./favicon.png">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+    <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
+    <!-- Theme Switch -->
+    <div class="theme-switch">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+            <span class="theme-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </span>
+        </button>
+    </div>
+    
+    <!-- Main Content -->
     <div class="container">
-        <h1>📊 VegieHat Data Analysis</h1>
+        <header class="header">
+            <h1>
+                VegieHat Data Analysis
+            </h1>
+        </header>
 
-        <div class="upload-section">
-            <label for="csvFile" class="file-label">
-                <input type="file" id="csvFile" accept=".csv,.xlsx" hidden>
-                <span class="upload-btn">📂 Choose a File</span>
-            </label>
-            <p id="fileName" class="file-name">No file selected</p>
-        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <label for="csvFile" class="file-label">
+                    <input type="file" id="csvFile" accept=".csv,.xlsx" hidden>
+                    <span class="upload-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Choose a File
+                    </span>
+                </label>
+                <p id="fileName" class="file-name">No file selected</p>
+            </div>
 
-        <button id="analyzeButton" disabled class="action-btn">Analyze Data</button>
+            <div class="action-status-wrapper">
+                <button id="analyzeButton" class="action-btn initializing" disabled>
+                    <div class="btn-content">
+                        <!-- Initializing Icon -->
+                        <svg class="btn-icon init-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                        </svg>
+                        
+                        <!-- Upload Icon -->
+                        <svg class="btn-icon upload-icon hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        
+                        <!-- Analysis Icon -->
+                        <svg class="btn-icon analyze-icon hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 20H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h3.93a2 2 0 0 1 1.66.9l.82 1.2a2 2 0 0 0 1.66.9H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2z"/>
+                            <path d="M8 10v6"/>
+                            <path d="M12 7v9"/>
+                            <path d="M16 13v3"/>
+                        </svg>
+                        
+                        <!-- Loading Analysis Icon -->
+                        <svg class="btn-icon loading-icon hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                        </svg>
+                        
+                        <span class="btn-text">Initializing WebR...</span>
+                        <span class="time-elapsed hidden">0:00</span>
+                    </div>
+                </button>
+            </div>
 
-        <div class="status" id="status">Ready to process file...</div>
-
-        <div id="downloadSection" class="hidden">
-            <button id="downloadButton" class="download-btn">⬇️ Download Processed Data</button>
-        </div>
+            <div id="downloadSection" class="download-section hidden">
+                <button id="downloadButton" class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Download Processed Data
+                </button>
+            </div>
+        </main>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 VegieHat Data Analysis. All rights reserved.</p>
+            <nav class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="./assets/js/script.js"></script>
 </body>
 </html>

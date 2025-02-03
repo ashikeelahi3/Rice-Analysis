@@ -1,0 +1,463 @@
+/* Variables */
+:root {
+    /* Light Theme */
+    --bg-color: #f8fafc;
+    --container-bg: #ffffff;
+    --text-color: #1e293b;
+    --border-color: #e2e8f0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --primary-color: #3b82f6;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --hover-opacity: 0.9;
+    --muted-text: #64748b;
+}
+
+[data-theme="dark"] {
+    --bg-color: #0f172a;
+    --container-bg: #1e293b;
+    --text-color: #f1f5f9;
+    --border-color: #334155;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --primary-color: #60a5fa;
+    --success-color: #34d399;
+    --danger-color: #f87171;
+    --muted-text: #94a3b8;
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+}
+
+/* Layout */
+.container {
+    flex: 1;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--container-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Upload Section */
+.upload-section {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.file-label:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-2px);
+}
+
+.file-name {
+    margin-top: 1rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* Buttons */
+.action-btn, .download-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.action-btn {
+    background: var(--success-color);
+    color: white;
+}
+
+.download-btn {
+    background: var(--danger-color);
+    color: white;
+}
+
+.action-btn:hover:not(:disabled),
+.download-btn:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-2px);
+}
+
+.action-btn:disabled {
+    background: var(--border-color);
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Button Icons */
+.upload-btn, .action-btn, .download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.upload-btn svg, 
+.action-btn svg, 
+.download-btn svg {
+    stroke: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.upload-btn:hover svg {
+    transform: translateY(-2px);
+}
+
+.action-btn:hover:not(:disabled) svg {
+    transform: scale(1.1);
+}
+
+.download-btn:hover svg {
+    transform: translateY(2px);
+}
+
+/* Action and Status Combined */
+.action-status-wrapper {
+    margin: 2rem 0;
+}
+
+.action-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--success-color);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Spinner Animation */
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Button States */
+.action-btn.ready {
+    background: var(--success-color);
+    opacity: 0.85;
+    cursor: not-allowed;
+}
+
+.action-btn.ready:not(:disabled) {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.action-btn.initializing {
+    background: var(--success-color);
+    opacity: 0.85;
+    cursor: wait;
+}
+
+.action-btn.ready:disabled {
+    background: var(--success-color);
+    opacity: 0.85;
+    cursor: not-allowed;
+}
+
+/* Hide spinner when not initializing */
+.action-btn:not(.initializing) .spinner {
+    display: none;
+}
+
+/* Status Styles */
+.status.loading {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.status.success {
+    border-color: var(--success-color);
+    color: var(--success-color);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.status.error {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Theme Toggle */
+.theme-switch {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+.theme-toggle {
+    background: var(--container-bg);
+    border: 2px solid var(--border-color);
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.theme-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* Footer */
+.footer {
+    background: var(--container-bg);
+    padding: 1rem 0;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    opacity: var(--hover-opacity);
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .action-status-wrapper {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+}
+
+/* Button Icons */
+.btn-icon {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+    stroke: currentColor;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Icon States */
+.action-btn.initializing .init-icon {
+    display: inline-block;
+    animation: rotate 2s linear infinite;
+}
+
+.action-btn.ready .upload-icon {
+    display: inline-block;
+}
+
+.action-btn.can-analyze .analyze-icon {
+    display: inline-block;
+}
+
+/* Rotation Animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Button States */
+.action-btn.initializing .init-icon {
+    display: inline-block;
+}
+
+.action-btn.initializing .upload-icon,
+.action-btn.initializing .analyze-icon {
+    display: none;
+}
+
+.action-btn.ready .init-icon,
+.action-btn.ready .analyze-icon {
+    display: none;
+}
+
+.action-btn.can-analyze .init-icon,
+.action-btn.can-analyze .upload-icon {
+    display: none;
+}
+
+/* Add to existing CSS */
+.action-btn.processing .processing-icon {
+    display: inline-block;
+    animation: rotate 1s linear infinite;
+}
+
+.action-btn.processing .analyze-icon,
+.action-btn.processing .upload-icon,
+.action-btn.processing .init-icon {
+    display: none;
+}
+
+/* Specific state styles */
+.action-btn.can-analyze {
+    cursor: pointer;
+}
+
+.action-btn.can-analyze:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.action-btn.can-analyze:active {
+    transform: translateY(0);
+}
+
+/* Add to existing styles */
+.time-elapsed {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-left: 8px;
+    min-width: 40px;
+}
+
+.action-btn.analyzing .loading-icon {
+    display: inline-block;
+    animation: rotate 1s linear infinite;
+}
+
+.action-btn.analyzing {
+    cursor: wait;
+}
+
+.action-btn.analyzing .analyze-icon,
+.action-btn.analyzing .upload-icon,
+.action-btn.analyzing .init-icon {
+    display: none;
+} 
